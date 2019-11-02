@@ -8,3 +8,9 @@
 * Created GitHub repo
 * Created scaffolding for project
 * Wrote user stories
+* Started working on project architecture
+* Created opening "graphic" for welcome screen
+
+**11-01-2019:**
+* Created 'rough drafts' of all classes, interfaces and enums
+* Organized files into folders

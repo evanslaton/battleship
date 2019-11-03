@@ -8,6 +8,10 @@ namespace battleship
     {
         private static readonly SimpleBoatFactory INSTANCE = new SimpleBoatFactory();
         private static readonly Dictionary<BoatType, int> BOAT_LIVES = GetBoatLives();
+        public static SimpleBoatFactory Instance
+        {
+            get => INSTANCE;
+        }
 
         private SimpleBoatFactory() { }
 

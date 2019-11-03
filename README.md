@@ -13,13 +13,14 @@ Based on Battleship by Milton Bradley
 
 ## Resources
 
-### Art
+### Display
 * [ASCII generator](http://www.network-science.de/ascii/)
 * [ASCII battleship art](http://asciiartboats.blogspot.com/2016/06/battleship-ascii-art.html)
 * [Changing colors in the console](https://stackoverflow.com/questions/7524057/how-do-i-change-the-full-background-color-of-the-console-window-in-c)
 * [Underlining strings in the console](https://stackoverflow.com/questions/5237666/adding-text-decorations-to-console-output)
 * [Centering text in the console](https://stackoverflow.com/questions/12847960/centering-text-in-c-sharp-console-app-only-working-with-some-input)
 * [Write over previous lines](https://stackoverflow.com/questions/8946808/can-console-clear-be-used-to-only-clear-a-line-instead-of-whole-console/14083947)
+* [Limiting user interaction in the console](https://stackoverflow.com/questions/32532024/disabling-user-input-in-a-console-application)
 
 ### Code
 * [Get the number of items defined in an enum](https://stackoverflow.com/questions/856154/total-number-of-items-defined-in-an-enum)

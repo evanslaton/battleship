@@ -10,20 +10,21 @@ namespace battleship
         private static string[] PLAYER_SELECTION = { "  One Player  ", "  Two Players  " };
         private static int PLAYER_SELECTION_LINE_NUMBER = 11;
         private static int WIDTH_OF_LONGEST_LINE = 47;
+        private static string NUMBER_OF_PLAYERS_PROMPT = "How many players? Use the left and right arrow keys to choose and press enter to submit.";
+        private static string PLACE_BOAT_PROMPT = "Use the arrow keys to move the boat, spacebar to change the boat's orientation, and enter to place the boat.";
 
         public static void DisplayWelcome()
         {
             SetConsoleColors();
             ReadAndDisplayFile(LOGO_PATH);
-            DisplayPlayerSelectionPrompt();
+            DisplayPrompt(NUMBER_OF_PLAYERS_PROMPT);
             DisplayCurrentlySelectedNumberOfPlayers(NumberOfHumanPlayers.OnePlayer);
             ReadAndDisplayFile(BATTLESHIP_PATH);
         }
 
-        private static void DisplayPlayerSelectionPrompt()
+        private static void DisplayPrompt(string prompt)
         {
             Console.WriteLine();
-            string prompt = "How many players? Use the left and right arrow keys to choose and press enter to submit.";
             CenterText(prompt, prompt.Length);
             Console.WriteLine();
         }
@@ -84,10 +85,19 @@ namespace battleship
                 CenterText(line, WIDTH_OF_LONGEST_LINE);
         }
 
-        private static void CenterText(String text, int widthToSubtract)
+        public static void CenterText(String text, int widthToSubtract)
         {
             Console.Write(new string(' ', (Console.WindowWidth - widthToSubtract) / 2));
             Console.WriteLine(text);
+        }
+
+        public static void DisplayBoatPlacing(Game game)
+        {
+            Console.Clear();
+            ReadAndDisplayFile(LOGO_PATH);
+            DisplayPrompt(PLACE_BOAT_PROMPT);
+            game.ActivePlayer.Board.DisplayToOwner();
+
         }
     }
 }

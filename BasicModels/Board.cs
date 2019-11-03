@@ -43,17 +43,22 @@ namespace battleship
 
         public void DisplayToOwner()
         {
-            for (int row = 0; row< 11; row++)
+            StringBuilder stringBuilder = new StringBuilder();
+            string currentRow;
+            int OFFSET = 4;
+            for (int row = 0; row < BOARD_DIMENSION; row++)
             {
-                for (int column = 0; column< 11; column++)
+                for (int column = 0; column < BOARD_DIMENSION; column++)
                 {
-                    Console.Write(GameBoard[row, column]);
+                    stringBuilder.Append(GameBoard[row, column]);
                 }
-                Console.WriteLine();
+                currentRow = stringBuilder.ToString();
+                Display.CenterText(currentRow, currentRow.Length / OFFSET);
+                stringBuilder.Clear();
             }
         }
 
-private void SetRowHeaders()
+        private void SetRowHeaders()
         {
             for (int row = 0; row < BOARD_DIMENSION - 1; row++)
             {

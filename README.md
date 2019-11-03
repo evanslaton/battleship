@@ -1,4 +1,4 @@
-|[README](README.md)|[How to Play](assets/how-to-play.md)|[Project Architecture](assets/architecture.md)|[User Stories](assets/user-stories.md)|[Change Logs](assets/change-logs.md)|
+|[README](README.md)|[How to Play](assets/how-to-play.md)|[Project Architecture](assets/architecture.md)|[User Stories](assets/user-stories.md)|[Change Log](assets/change-log.md)|
 |-|-|-|-|-|
 
 # Battleship Console Game

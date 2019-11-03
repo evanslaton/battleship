@@ -17,3 +17,4 @@
 * Finished welcome screen
   * Exported display functionality to new utility class Display
   * Users can select number of players
+* Started working on displaying the boat placing screen and functionality

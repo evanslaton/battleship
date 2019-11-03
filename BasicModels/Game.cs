@@ -9,25 +9,26 @@ namespace battleship
 
     public class Game
     {
-        private Player ActivePlayer { get; set; }
-        private Player InactivePlayer { get; set; }
-        private NumberOfHumanPlayers NumberOfHumanPlayers { get; set; }
         private SimplePlayerFactory SimplePlayerFactory { get; set; }
+        public Player ActivePlayer { get; set; }
+        public Player InactivePlayer { get; set; }
+        private NumberOfHumanPlayers NumberOfHumanPlayers { get; set; }
 
         public Game()
         {
-            ActivePlayer = null;
+            SimplePlayerFactory = SimplePlayerFactory.Instance;
+            ActivePlayer = SimplePlayerFactory.CreatePlayer(PlayerType.Human);
             InactivePlayer = null;
             NumberOfHumanPlayers = NumberOfHumanPlayers.OnePlayer;
-            SimplePlayerFactory = SimplePlayerFactory.Instance;
         }
 
         public static void Start()
         {
-            Display.DisplayWelcome();
             Game game = new Game();
+            Display.DisplayWelcome();
             game.SelectNumberOfPlayers();
-            game.CreatePlayers();
+            game.CreateOtherPlayer();
+            Display.DisplayBoatPlacing(game);
 
         }
 
@@ -48,13 +49,21 @@ namespace battleship
             }
         }
 
-        private void CreatePlayers()
+        private void CreateOtherPlayer()
         {
-            ActivePlayer = SimplePlayerFactory.CreatePlayer(PlayerType.Human);
             if (NumberOfHumanPlayers == NumberOfHumanPlayers.OnePlayer)
                 InactivePlayer = SimplePlayerFactory.CreatePlayer(PlayerType.Computer);
             else
-                SimplePlayerFactory.CreatePlayer(PlayerType.Human);
+                InactivePlayer = SimplePlayerFactory.CreatePlayer(PlayerType.Human);
+            ActivePlayer.Opponent = InactivePlayer;
+            InactivePlayer.Opponent = ActivePlayer;
+        }
+
+        public void ChangeActivePlayer()
+        {
+            Player temporary = ActivePlayer;
+            ActivePlayer = InactivePlayer;
+            InactivePlayer = temporary;
         }
     }
 }

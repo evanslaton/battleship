@@ -14,6 +14,6 @@
 - [ ] As a developer, I want the game to play as similarly to the Milton Bradley version of Battleship as possible so that many users will already be familiar with the game.
 - [ ] As a developer, I want to include clear and consice instructions so users can download and play the game without getting frustrated.
 - [ ] As a developer, I want to document all changes in a change log so that I can keep track of which changes were made and when.
-- [ ] As a developer, I want to include the user stories and system architecture in the documentation so other developers are able to easily understand how I designed the game.
-- [ ] As a developer, I want to utilize applicable design patterns so that the code is flexible and uses industry best practices.
+- [ ] As a developer, I want to include the user stories and system architecture in the documentation so others are able to easily understand how I designed the game.
+- [ ] As a developer, I want to utilize design patterns so that I can gain experience using them.
 - [ ] As a developer, I want to focus on using aspects of the C# language that I am not comfortable with so that this experience forces me to grow as a software developer.

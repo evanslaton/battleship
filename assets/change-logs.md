@@ -14,3 +14,6 @@
 **11-01-2019:**
 * Created 'rough drafts' of all classes, interfaces and enums
 * Organized files into folders
+* Finished welcome screen
+  * Exported display functionality to new utility class Display
+  * Users can select number of players

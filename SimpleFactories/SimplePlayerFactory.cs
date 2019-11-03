@@ -9,6 +9,10 @@ namespace battleship
     public sealed class SimplePlayerFactory
     {
         private static readonly SimplePlayerFactory INSTANCE = new SimplePlayerFactory();
+        public static SimplePlayerFactory Instance
+        {
+            get => INSTANCE;
+        }
 
         private SimplePlayerFactory() { }
 

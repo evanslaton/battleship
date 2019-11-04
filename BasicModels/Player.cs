@@ -23,7 +23,7 @@ namespace battleship
 
         public void PerformPlaceBoat()
         {
-            BoatPlacer.PlaceBoat();
+            BoatPlacer.PlaceBoat(Board);
         }
 
         public void PerformTakeTurn()

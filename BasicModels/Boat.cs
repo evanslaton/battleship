@@ -7,12 +7,13 @@ namespace battleship
     public enum Orientation { Horizontal, Vertical }
     public enum BoatType { Destoyer, Submarine, Cruiser, Battleship, Carrier }
 
+
     public class Boat
     {
-        BoatType BoatType { get; set; }
-        bool[] BoatLives { get; set; }
-        bool IsSunk { get; set; }
-        Orientation Orientation { get; set; }
+        public BoatType BoatType { get; set; }
+        public bool[] BoatLives { get; set; }
+        public bool IsSunk { get; set; }
+        public Orientation Orientation { get; set; }
 
         public Boat(BoatType boatType, int lives)
         {
@@ -20,6 +21,12 @@ namespace battleship
             BoatLives = new bool[lives];
             IsSunk = false;
             Orientation = Orientation.Horizontal;
+        }
+
+        public void ChangeOrientation()
+        {
+            if (Orientation == Orientation.Horizontal) Orientation = Orientation.Vertical;
+            else Orientation = Orientation.Horizontal;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace battleship
             game.SelectNumberOfPlayers();
             game.CreateOtherPlayer();
             Display.DisplayBoatPlacing(game);
+            game.ActivePlayer.PerformPlaceBoat();
 
         }
 

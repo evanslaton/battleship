@@ -1,17 +1,28 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace battleship
 {
     public static class Display
     {
+        //For underlining characters in the console
+        const int STD_OUTPUT_HANDLE = -11;
+        const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 4;
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern IntPtr GetStdHandle(int nStdHandle);
+        [DllImport("kernel32.dll")]
+        static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+        [DllImport("kernel32.dll")]
+        static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+
         private static string LOGO_PATH = @"..\..\..\assets\images\logo.txt";
         private static string BATTLESHIP_PATH = @"..\..\..\assets\images\battleship.txt";
         private static string[] PLAYER_SELECTION = { "  One Player  ", "  Two Players  " };
         private static int PLAYER_SELECTION_LINE_NUMBER = 11;
         private static int WIDTH_OF_LONGEST_LINE = 47;
         private static string NUMBER_OF_PLAYERS_PROMPT = "How many players? Use the left and right arrow keys to choose and press enter to submit.";
-        private static string PLACE_BOAT_PROMPT = "Use the arrow keys to move the boat, spacebar to change the boat's orientation, and enter to place the boat.";
+        private static string PLACE_BOAT_PROMPT = "Use the arrow keys to move the boat, spacebar to change orientation, and enter to place.";
 
         public static void DisplayWelcome()
         {
@@ -97,7 +108,33 @@ namespace battleship
             ReadAndDisplayFile(LOGO_PATH);
             DisplayPrompt(PLACE_BOAT_PROMPT);
             game.ActivePlayer.Board.DisplayToOwner();
+        }
 
+        public static string WriteUnderline(string stringToUnderline)
+        {
+            var handle = GetStdHandle(STD_OUTPUT_HANDLE);
+            uint mode;
+            GetConsoleMode(handle, out mode);
+            mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+            SetConsoleMode(handle, mode);
+            return $"\x1B[4m{stringToUnderline}\x1B[24m";
+        }
+
+        public static void WriteAt(string s, int row, int column)
+        {
+            try
+            {
+                Console.SetCursorPosition(column, row);
+                Console.Write(s);
+
+                // moves cursor outside of GameBoard
+                Console.SetCursorPosition(20,20);
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                Console.Clear();
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

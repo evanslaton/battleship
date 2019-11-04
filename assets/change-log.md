@@ -14,7 +14,13 @@
 **11-01-2019:**
 * Created 'rough drafts' of all classes, interfaces and enums
 * Organized files into folders
+* Began working on welcome screen
+
+**11-02-2019:**
 * Finished welcome screen
-  * Exported display functionality to new utility class Display
   * Users can select number of players
+* Exported display functionality to new utility class Display
 * Started working on displaying the boat placing screen and functionality
+
+**11-03-2019:**
+* Made steady progess on boat placing functionality, able to move a point around the grid

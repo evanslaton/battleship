@@ -23,6 +23,7 @@ namespace battleship
         private static int WIDTH_OF_LONGEST_LINE = 47;
         private static string NUMBER_OF_PLAYERS_PROMPT = "How many players? Use the left and right arrow keys to choose and press enter to submit.";
         private static string PLACE_BOAT_PROMPT = "Use the arrow keys to move the boat, spacebar to change orientation, and enter to place.";
+        private static string ATTACK_PROMPT = "Enter a coordinate and press enter to fire. Exampes: A6, J7, D1.";
 
         public static void DisplayWelcome()
         {
@@ -135,6 +136,14 @@ namespace battleship
                 Console.Clear();
                 Console.WriteLine(e.Message);
             }
+        }
+
+        public static void DisplayOpponentBoard(Game game)
+        {
+            Console.Clear();
+            ReadAndDisplayFile(LOGO_PATH);
+            DisplayPrompt(ATTACK_PROMPT);
+            game.ActivePlayer.Opponent.Board.DisplayToOpponent();
         }
     }
 }

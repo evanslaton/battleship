@@ -29,3 +29,4 @@ Based on Battleship by Milton Bradley
 
 ### Tools
 * [Free online diagram software](https://www.draw.io/)
+* [Regex 101](https://regex101.com/)

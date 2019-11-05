@@ -16,12 +16,12 @@ namespace battleship
 
         private SimplePlayerFactory() { }
 
-        public Player CreatePlayer(PlayerType playerType)
+        public Player CreatePlayer(string name, PlayerType playerType)
         {
             if (playerType == PlayerType.Human)
-                return new Player(new HumanBoatPlacer(), new HumanTurnTaker());
+                return new Player(name, new HumanBoatPlacer(), new HumanTurnTaker());
             else
-                return new Player(new ComputerBoatPlacer(), new ComputerTurnTaker());
+                return new Player(name, new ComputerBoatPlacer(), new ComputerTurnTaker());
         }
     }
 }

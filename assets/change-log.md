@@ -24,3 +24,6 @@
 
 **11-03-2019:**
 * Made steady progess on boat placing functionality, able to move a point around the grid
+
+**11-04-2019**
+* Able to move boats around the grid including changing the boats orientation

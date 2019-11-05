@@ -6,6 +6,6 @@ namespace battleship
 {
     public interface IPlaceBoatBehavior
     {
-        public void PlaceBoat();
+        public void PlaceBoat(Board board);
     }
 }

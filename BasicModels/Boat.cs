@@ -5,7 +5,7 @@ using System.Text;
 namespace battleship
 {
     public enum Orientation { Horizontal, Vertical }
-    public enum BoatType { Destoyer, Submarine, Cruiser, Battleship, Carrier }
+    public enum BoatType { Carrier, Battleship, Cruiser, Submarine, Destoyer }
 
 
     public class Boat

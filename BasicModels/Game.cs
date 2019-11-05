@@ -31,6 +31,8 @@ namespace battleship
             Display.DisplayBoatPlacing(game);
             game.ActivePlayer.PerformPlaceBoat();
 
+            Display.DisplayBoatPlacing(game);
+            game.ActivePlayer.PerformPlaceBoat();
         }
 
         private void SelectNumberOfPlayers()

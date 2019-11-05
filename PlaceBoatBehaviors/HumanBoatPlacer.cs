@@ -27,28 +27,23 @@ namespace battleship.PlaceBoatBehaviors
                     userInput = Console.ReadKey(true);
                     if (userInput.Key == ConsoleKey.Enter)
                     {
-                        selectionWasMade = true;
-                        //board.AddBoatToBoard(boat, row, column);
+                        selectionWasMade = board.AddBoatToBoard(boat, row, column);
                     }
                     else if (userInput.Key == ConsoleKey.LeftArrow && column > Board.COLUMN_OFFSET)
                     {
-                        column -= 2;
-                        board.ShowBoatOnBoard(boat, row, 0, column, -2);
+                        board.ShowBoatOnBoard(boat, row, 0, column -= 2, -2);
                     }
                     else if (userInput.Key == ConsoleKey.UpArrow && row > Board.ROW_OFFSET)
                     {
-                        row--;
-                        board.ShowBoatOnBoard(boat, row, -1, column, 0);
+                        board.ShowBoatOnBoard(boat, --row, -1, column, 0);
                     }
                     else if (userInput.Key == ConsoleKey.RightArrow && IsInRightBoundary(boat, column))
                     {
-                        column += 2;
-                        board.ShowBoatOnBoard(boat, row, 0, column, 2);
+                        board.ShowBoatOnBoard(boat, row, 0, column += 2, 2);
                     }
                     else if (userInput.Key == ConsoleKey.DownArrow && IsInBottomBoundary(boat, row))
                     {
-                        row++;
-                        board.ShowBoatOnBoard(boat, row, 1, column, 0);
+                        board.ShowBoatOnBoard(boat, ++row, 1, column, 0);
                     }
                     else if (userInput.Key == ConsoleKey.Spacebar)
                     {
@@ -59,9 +54,7 @@ namespace battleship.PlaceBoatBehaviors
                         }
                     }
                 }
-
             }
-
         }
 
         private static bool IsInRightBoundary(Boat boat, int column)

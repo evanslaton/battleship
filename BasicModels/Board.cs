@@ -92,6 +92,54 @@ namespace battleship
             }
         }
 
+        public bool AddBoatToBoard(Boat boat, int row, int column)
+        {
+            if (boat.Orientation == Orientation.Horizontal && ValidHorizontalBoatLocation(boat, row, column))
+            {
+                Console.WriteLine("TRUE");
+                AddHorizontalBoat(boat, row, 0, column, 0);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidHorizontalBoatLocation(Boat boat, int row, int column)
+        {
+            int boardRow = row - ROW_OFFSET + 1;
+            int boardColumn = TranslateConsoleGridToGameBoard(column);
+            for (int i = 0; i < boat.BoatLives.Length; i++)
+            {
+                if (GameBoard[boardRow, boardColumn + i] == BOAT_SPACE ||
+                    GameBoard[boardRow, boardColumn + i] == BOAT_SPACE_RIGHT_EDGE) 
+                { 
+                    return false;
+                };
+            }
+            return true;
+        }
+
+        public void AddHorizontalBoat(Boat boat, int row, int rowOffset, int column, int columnOffset)
+        { 
+            int boardRow = row - ROW_OFFSET + 1;
+            int boardColumn = TranslateConsoleGridToGameBoard(column);
+
+            for (int i = 0; i < boat.BoatLives.Length; i++)
+            { 
+                if (GameBoard[boardRow, boardColumn + i] == EMPTY_SPACE)
+                    GameBoard[boardRow, boardColumn + i] = BOAT_SPACE;
+                else
+                    GameBoard[boardRow, boardColumn + i] = BOAT_SPACE_RIGHT_EDGE;
+            }
+        }
+
+    private bool Collision(int row, int column)
+        {
+            return GameBoard[row, column] == BOAT_SPACE || GameBoard[row, column] == BOAT_SPACE_RIGHT_EDGE ? true : false;
+        }
+
         public void ChangeOrientationAndShowBoatOnBoard(Boat boat, int row, int rowOffset, int column, int columnOffset)
         {
             if (boat.Orientation == Orientation.Horizontal)
@@ -100,7 +148,6 @@ namespace battleship
                 EraseVerticalBoat(boat, row, rowOffset, column, columnOffset);
             boat.ChangeOrientation();
             ShowBoatOnBoard(boat, row, rowOffset, column, columnOffset);
-
         }
 
         public void ShowBoatOnBoard(Boat boat, int row, int rowOffset, int column, int columnOffset)
@@ -124,15 +171,20 @@ namespace battleship
         {
             int boardRow = row - ROW_OFFSET + 1;
             int boardColumn = TranslateConsoleGridToGameBoard(column);
+            int boardOffset;
+            if (columnOffset == 2) boardOffset = 1;
+            else if (columnOffset == -2) boardOffset = -1;
+            else boardOffset = 0;
+
             for (int i = 0; i < boat.BoatLives.Length; i++)
             {
-                if (GameBoard[boardRow, boardColumn + i] == EMPTY_SPACE ||
-                    GameBoard[boardRow, boardColumn + i] == EMPTY_RIGHT_EDGE_SPACE)
-                    Display.WriteAt(Display.WriteUnderline(" "), row - rowOffset, column - columnOffset + i * 2);
-                else if (GameBoard[boardRow, boardColumn + i] == BOAT_SPACE ||
-                        GameBoard[boardRow, boardColumn + i] == BOAT_SPACE_RIGHT_EDGE)
-                    Display.WriteAt(Display.WriteUnderline("O"), row - rowOffset, column - columnOffset + i * 2);
-                // TODO: Add else to cover if the space isn't empty
+Display.WriteAt("withBoardOffset: " + (boardColumn + i - boardOffset), 15 + i, 0);
+                if (GameBoard[boardRow - rowOffset, boardColumn + i - boardOffset] == EMPTY_SPACE ||
+                    GameBoard[boardRow - rowOffset, boardColumn + i - boardOffset] == EMPTY_RIGHT_EDGE_SPACE)
+                    Display.WriteAt(Display.WriteUnderline(" "), row - rowOffset, column - columnOffset + (i * 2));
+                if (GameBoard[boardRow - rowOffset, boardColumn + i - boardOffset] == BOAT_SPACE ||
+                    GameBoard[boardRow - rowOffset, boardColumn + i - boardOffset] == BOAT_SPACE_RIGHT_EDGE)
+                    Display.WriteAt(Display.WriteUnderline("O"), row - rowOffset, column - columnOffset + (i * 2));
             }
         }
 
@@ -149,22 +201,29 @@ namespace battleship
         {
             int boardRow = row - ROW_OFFSET + 1;
             int boardColumn = TranslateConsoleGridToGameBoard(column);
+            int boardOffset;
+            if (rowOffset == 1) boardOffset = 1;
+            else if (rowOffset == -1) boardOffset = -1;
+            else boardOffset = 0;
             for (int i = 0; i < boat.BoatLives.Length; i++)
             {
-                if (GameBoard[boardRow + i, boardColumn] == EMPTY_SPACE ||
-                    GameBoard[boardRow + i, boardColumn] == EMPTY_RIGHT_EDGE_SPACE)
+                if (GameBoard[boardRow + i - boardOffset, boardColumn] == EMPTY_SPACE ||
+                    GameBoard[boardRow + i - boardOffset, boardColumn] == EMPTY_RIGHT_EDGE_SPACE)
                     Display.WriteAt(Display.WriteUnderline(" "), row - rowOffset + i, column - columnOffset);
-                // TODO: Add else to cover if the space isn't empty
+
+                else if (GameBoard[boardRow + i - boardOffset, boardColumn] == BOAT_SPACE ||
+                    GameBoard[boardRow + i - boardOffset, boardColumn] == BOAT_SPACE_RIGHT_EDGE)
+                    Display.WriteAt(Display.WriteUnderline("O"), row - rowOffset + i, column - columnOffset);
             }
         }
 
         private int TranslateConsoleGridToGameBoard(int column)
         {
-            column = column - COLUMN_OFFSET + 1;
-            if (column <= 2) return column;
+            column = column - COLUMN_OFFSET;
+            if (column == 0) return column + 1;
 
             int translator = 0;
-            for (int i = 0; i < column; i += 2) 
+            for (int i = 2; i < column; i += 2) 
             {
                 translator++;
             }

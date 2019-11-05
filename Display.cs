@@ -128,7 +128,7 @@ namespace battleship
                 Console.Write(s);
 
                 // moves cursor outside of GameBoard
-                Console.SetCursorPosition(20,20);
+                Console.SetCursorPosition(0, 15);
             }
             catch (ArgumentOutOfRangeException e)
             {

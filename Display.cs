@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace battleship
 {
@@ -18,12 +19,14 @@ namespace battleship
 
         private static string LOGO_PATH = @"..\..\..\assets\images\logo.txt";
         private static string BATTLESHIP_PATH = @"..\..\..\assets\images\battleship.txt";
+        private static string EXPLOSION_PATH = @"..\..\..\assets\images\explosion.txt";
         private static string[] PLAYER_SELECTION = { "  One Player  ", "  Two Players  " };
         private static int PLAYER_SELECTION_LINE_NUMBER = 11;
         private static int WIDTH_OF_LONGEST_LINE = 47;
         private static string NUMBER_OF_PLAYERS_PROMPT = "How many players? Use the left and right arrow keys to choose and press enter to submit.";
         private static string PLACE_BOAT_PROMPT = "Use the arrow keys to move the boat, spacebar to change orientation, and enter to place.";
         private static string ATTACK_PROMPT = "Enter a coordinate and press enter to fire. Exampes: A6, J7, D1.";
+        private static string PRESS_KEY_TO_CONTINUE_PROMPT = "press any key to continue.";
 
         public static void DisplayWelcome()
         {
@@ -103,9 +106,15 @@ namespace battleship
             Console.WriteLine(text);
         }
 
+        public static void CenterTextWithoutReturn(String text, int widthToSubtract)
+        {
+            Console.Write(new string(' ', (Console.WindowWidth - widthToSubtract) / 2));
+            Console.Write(text);
+        }
+
         public static void DisplayBoatPlacing(Game game)
         {
-            Console.Clear();
+            Display.DisplayBetweenTurns(game);
             ReadAndDisplayFile(LOGO_PATH);
             DisplayPrompt(PLACE_BOAT_PROMPT);
             game.ActivePlayer.Board.DisplayToOwner();
@@ -140,10 +149,28 @@ namespace battleship
 
         public static void DisplayOpponentBoard(Game game)
         {
+            Display.DisplayBetweenTurns(game);
+            ReadAndDisplayFile(LOGO_PATH);
+            DisplayPrompt(ATTACK_PROMPT + "\n\n\n");
+            game.ActivePlayer.Opponent.Board.DisplayToOpponent();
+        }
+
+        public static void DisplayBetweenTurns(Game game)
+        {
             Console.Clear();
             ReadAndDisplayFile(LOGO_PATH);
-            DisplayPrompt(ATTACK_PROMPT);
-            game.ActivePlayer.Opponent.Board.DisplayToOpponent();
+            Console.WriteLine("\n\n\n");
+            DisplayPrompt($"{game.ActivePlayer.Name}, {PRESS_KEY_TO_CONTINUE_PROMPT}");
+            Console.ReadKey(true);
+            Console.WriteLine();
+            Console.Clear();
+        }
+
+        public static void DisplayHit()
+        {
+            Console.Clear();
+            ReadAndDisplayFile(EXPLOSION_PATH);
+            Thread.Sleep(2000);
         }
     }
 }

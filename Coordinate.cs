@@ -8,15 +8,13 @@ namespace battleship
     public class Coordinate
     {
         public static string[] LETTERS = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
-        public int GameBoardRow { get; }
-        public int GameBoardColumn { get; }
-        public int ConsoleBoardRow {get;}
-        public int ConsoleBoardColumn { get; }
+        public int Row { get; }
+        public int Column { get; }
 
         public Coordinate(string coordinates)
         {
-            GameBoardRow = ToGameBoardRow(coordinates);
-            GameBoardColumn = ToGameBoardColumn(coordinates);
+            Row = ToGameBoardRow(coordinates);
+            Column = ToGameBoardColumn(coordinates);
         }
 
         private static int ToGameBoardRow(string coordinates)

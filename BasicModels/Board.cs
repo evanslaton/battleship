@@ -288,7 +288,7 @@ namespace battleship
 
         public bool AreValidAttackCoordinates(Coordinate coordinates)
         {
-            string valueAtCoordinates = GameBoard[coordinates.GameBoardRow, coordinates.GameBoardColumn];
+            string valueAtCoordinates = GameBoard[coordinates.Row, coordinates.Column];
             if (valueAtCoordinates == EMPTY_SPACE ||
                 valueAtCoordinates == EMPTY_SPACE_RIGHT_EDGE||
                 valueAtCoordinates == BOAT_SPACE ||
@@ -300,15 +300,21 @@ namespace battleship
 
         public void AddAttack(Coordinate coordinates)
         {
-            string valueAtCoordinates = GameBoard[coordinates.GameBoardRow, coordinates.GameBoardColumn];
+            string valueAtCoordinates = GameBoard[coordinates.Row, coordinates.Column];
             if (valueAtCoordinates == EMPTY_SPACE)
-                GameBoard[coordinates.GameBoardRow, coordinates.GameBoardColumn] = MISS_SPACE;
+                GameBoard[coordinates.Row, coordinates.Column] = MISS_SPACE;
             else if (valueAtCoordinates == EMPTY_SPACE_RIGHT_EDGE)
-                GameBoard[coordinates.GameBoardRow, coordinates.GameBoardColumn] = MISS_SPACE_RIGHT_EDGE;
+                GameBoard[coordinates.Row, coordinates.Column] = MISS_SPACE_RIGHT_EDGE;
             else if (valueAtCoordinates == BOAT_SPACE)
-                GameBoard[coordinates.GameBoardRow, coordinates.GameBoardColumn] = HIT_BOAT_SPACE;
+            {
+                GameBoard[coordinates.Row, coordinates.Column] = HIT_BOAT_SPACE;
+                Display.DisplayHit();
+            }
             else if (valueAtCoordinates == BOAT_SPACE_RIGHT_EDGE)
-                GameBoard[coordinates.GameBoardRow, coordinates.GameBoardColumn] = HIT_BOAT_SPACE_RIGHT_EDGE;
+            {
+                GameBoard[coordinates.Row, coordinates.Column] = HIT_BOAT_SPACE_RIGHT_EDGE;
+                Display.DisplayHit();
+            }
         }
     }
 }

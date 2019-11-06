@@ -302,9 +302,15 @@ namespace battleship
         {
             string valueAtCoordinates = GameBoard[coordinates.Row, coordinates.Column];
             if (valueAtCoordinates == EMPTY_SPACE)
+            {
                 GameBoard[coordinates.Row, coordinates.Column] = MISS_SPACE;
+                Display.DisplayMiss();
+            }
             else if (valueAtCoordinates == EMPTY_SPACE_RIGHT_EDGE)
+            {
                 GameBoard[coordinates.Row, coordinates.Column] = MISS_SPACE_RIGHT_EDGE;
+                Display.DisplayMiss();
+            }
             else if (valueAtCoordinates == BOAT_SPACE)
             {
                 GameBoard[coordinates.Row, coordinates.Column] = HIT_BOAT_SPACE;

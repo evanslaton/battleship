@@ -20,9 +20,9 @@ namespace battleship
         private static string LOGO_PATH = @"..\..\..\assets\images\logo.txt";
         private static string BATTLESHIP_PATH = @"..\..\..\assets\images\battleship.txt";
         private static string EXPLOSION_PATH = @"..\..\..\assets\images\explosion.txt";
+        private static string MISS_PATH = @"..\..\..\assets\images\miss.txt";
         private static string[] PLAYER_SELECTION = { "  One Player  ", "  Two Players  " };
         private static int PLAYER_SELECTION_LINE_NUMBER = 11;
-        private static int WIDTH_OF_LONGEST_LINE = 47;
         private static string NUMBER_OF_PLAYERS_PROMPT = "How many players? Use the left and right arrow keys to choose and press enter to submit.";
         private static string PLACE_BOAT_PROMPT = "Use the arrow keys to move the boat, spacebar to change orientation, and enter to place.";
         private static string ATTACK_PROMPT = "Enter a coordinate and press enter to fire. Exampes: A6, J7, D1.";
@@ -96,8 +96,13 @@ namespace battleship
         private static void ReadAndDisplayFile(string filePath)
         {
             string[] fileContentsByLine = File.ReadAllLines(filePath);
+            int lengthOfLongestLine = 0;
             foreach (string line in fileContentsByLine)
-                CenterText(line, WIDTH_OF_LONGEST_LINE);
+                if (line.Length > lengthOfLongestLine) lengthOfLongestLine = line.Length;
+
+
+            foreach (string line in fileContentsByLine)
+                CenterText(line, lengthOfLongestLine);
         }
 
         public static void CenterText(String text, int widthToSubtract)
@@ -170,7 +175,14 @@ namespace battleship
         {
             Console.Clear();
             ReadAndDisplayFile(EXPLOSION_PATH);
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
+        }
+
+        public static void DisplayMiss()
+        {
+            Console.Clear();
+            ReadAndDisplayFile(MISS_PATH);
+            Thread.Sleep(1000);
         }
     }
 }

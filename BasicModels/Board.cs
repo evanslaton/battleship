@@ -36,11 +36,13 @@ namespace battleship
 
         public Boat[] Boats { get; set; }
         public string[,] GameBoard { get; set; }
+        public int Lives { get; set; }
 
         public Board()
         {
             GameBoard = new string[BOARD_DIMENSION, BOARD_DIMENSION];
             FillBoard();
+            Lives = 5;
         }
 
         private void FillBoard()
@@ -314,11 +316,13 @@ namespace battleship
             else if (valueAtCoordinates == BOAT_SPACE)
             {
                 GameBoard[coordinates.Row, coordinates.Column] = HIT_BOAT_SPACE;
+                Lives--;
                 Display.DisplayHit();
             }
             else if (valueAtCoordinates == BOAT_SPACE_RIGHT_EDGE)
             {
                 GameBoard[coordinates.Row, coordinates.Column] = HIT_BOAT_SPACE_RIGHT_EDGE;
+                Lives--;
                 Display.DisplayHit();
             }
         }

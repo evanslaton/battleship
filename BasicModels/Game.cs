@@ -29,7 +29,6 @@ namespace battleship
             Game game = new Game();
             Display.DisplayWelcome();
             game.SelectNumberOfPlayers();
-            game.CreateOtherPlayer();
 
             Display.DisplayBoatPlacing(game);
             game.ActivePlayer.PerformPlaceBoat();
@@ -39,12 +38,17 @@ namespace battleship
             game.ActivePlayer.PerformPlaceBoat();
             game.ChangeActivePlayer();
 
-            while (true)
+            bool activePlayerHasWon = false;
+            while (!activePlayerHasWon)
             {
                 Display.DisplayOpponentBoard(game);
                 game.Attack();
-                game.ChangeActivePlayer();
+                activePlayerHasWon = game.CheckForWin();
+                if (!activePlayerHasWon) game.ChangeActivePlayer();
             }
+
+            Display.DisplayWinner(game);
+            Console.ReadKey();
         }
 
         private void Attack()
@@ -98,6 +102,7 @@ namespace battleship
                     NumberOfHumanPlayers = NumberOfHumanPlayers.TwoPlayers;
                 Display.DisplayCurrentlySelectedNumberOfPlayers(NumberOfHumanPlayers);
             }
+            CreateOtherPlayer();
         }
 
         private void CreateOtherPlayer()
@@ -116,5 +121,7 @@ namespace battleship
             ActivePlayer = InactivePlayer;
             InactivePlayer = temporary;
         }
+
+        private bool CheckForWin() => ActivePlayer.Opponent.Board.Lives == 0;
     }
 }

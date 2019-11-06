@@ -18,11 +18,11 @@ namespace battleship
         private static Dictionary<BoatType, int> GetBoatLives()
         {
             Dictionary<BoatType, int> boatLives = new Dictionary<BoatType, int>();
-            boatLives.Add(BoatType.Destoyer, 2);
-            boatLives.Add(BoatType.Submarine, 3);
-            boatLives.Add(BoatType.Cruiser, 3);
-            boatLives.Add(BoatType.Battleship, 4);
-            boatLives.Add(BoatType.Carrier, 5);
+            boatLives.Add(BoatType.Destoyer, 1);
+            boatLives.Add(BoatType.Submarine, 1);
+            boatLives.Add(BoatType.Cruiser, 1);
+            boatLives.Add(BoatType.Battleship, 1);
+            boatLives.Add(BoatType.Carrier, 1);
             return boatLives;
         }
 

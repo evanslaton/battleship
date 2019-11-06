@@ -32,3 +32,6 @@
 **11-05-2019**
 * Fixed bug where boats weren't rendering properly when moving over other boats
 * Able to add vertically oriented boats to the game board
+* Able to "attack" and update game boards
+* Validate user input during attack to make sure coordinates are on game board
+* Added explosion.txt and miss.txt to notify users if they hit or miss during their turn

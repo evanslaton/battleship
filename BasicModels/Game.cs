@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace battleship
 {
@@ -9,6 +10,7 @@ namespace battleship
 
     public class Game
     {
+        private static string[] PLAYER_NAMES = { "Player 1", "Player 2" };
         private SimplePlayerFactory SimplePlayerFactory { get; set; }
         public Player ActivePlayer { get; set; }
         public Player InactivePlayer { get; set; }
@@ -17,7 +19,7 @@ namespace battleship
         public Game()
         {
             SimplePlayerFactory = SimplePlayerFactory.Instance;
-            ActivePlayer = SimplePlayerFactory.CreatePlayer(PlayerType.Human);
+            ActivePlayer = SimplePlayerFactory.CreatePlayer(PLAYER_NAMES[0], PlayerType.Human);
             InactivePlayer = null;
             NumberOfHumanPlayers = NumberOfHumanPlayers.OnePlayer;
         }
@@ -28,11 +30,57 @@ namespace battleship
             Display.DisplayWelcome();
             game.SelectNumberOfPlayers();
             game.CreateOtherPlayer();
-            Display.DisplayBoatPlacing(game);
-            game.ActivePlayer.PerformPlaceBoat();
 
             Display.DisplayBoatPlacing(game);
             game.ActivePlayer.PerformPlaceBoat();
+            game.ChangeActivePlayer();
+
+            Display.DisplayBoatPlacing(game);
+            game.ActivePlayer.PerformPlaceBoat();
+            game.ChangeActivePlayer();
+
+            while (true)
+            {
+                Display.DisplayOpponentBoard(game);
+                game.Attack();
+                game.ChangeActivePlayer();
+            }
+        }
+
+        private void Attack()
+        {
+            Board OpponentBoard = ActivePlayer.Opponent.Board;
+            Coordinate coordinate;
+            bool isValidAttack;
+            do
+            {
+                coordinate = GetAttackCoordinates();
+                isValidAttack = OpponentBoard.AreValidAttackCoordinates(coordinate);
+
+            } while (!isValidAttack);
+            OpponentBoard.AddAttack(coordinate);
+        }
+
+        private Coordinate GetAttackCoordinates()
+        {
+            string userInput;
+            Match validInput;
+            string REGEX = @"^((([1-9]|10)[a-j])|(([a-j]([1-9]|10))))$";
+            bool isValidInput = false;
+            int COORDINATES_LINE = 11;
+            int COORDINATES_LINE_LENGTH = 18;
+            do
+            {
+                Console.SetCursorPosition(0, COORDINATES_LINE);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, COORDINATES_LINE);
+                Display.CenterTextWithoutReturn("Coordinates: ", COORDINATES_LINE_LENGTH);
+                userInput = Console.ReadLine();
+                userInput = userInput.ToLower();
+                validInput = Regex.Match(userInput, REGEX);
+                isValidInput = validInput.Success;
+            } while (!isValidInput);
+            return new Coordinate(userInput);
         }
 
         private void SelectNumberOfPlayers()
@@ -55,9 +103,9 @@ namespace battleship
         private void CreateOtherPlayer()
         {
             if (NumberOfHumanPlayers == NumberOfHumanPlayers.OnePlayer)
-                InactivePlayer = SimplePlayerFactory.CreatePlayer(PlayerType.Computer);
+                InactivePlayer = SimplePlayerFactory.CreatePlayer(PLAYER_NAMES[1], PlayerType.Computer);
             else
-                InactivePlayer = SimplePlayerFactory.CreatePlayer(PlayerType.Human);
+                InactivePlayer = SimplePlayerFactory.CreatePlayer(PLAYER_NAMES[1], PlayerType.Human);
             ActivePlayer.Opponent = InactivePlayer;
             InactivePlayer.Opponent = ActivePlayer;
         }

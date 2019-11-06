@@ -26,9 +26,13 @@ namespace battleship
         public static int ROW_OFFSET = 12;
         public static int COLUMN_OFFSET = 50;
         private static string EMPTY_SPACE = $"|{Display.WriteUnderline(" ")}";
-        private static string EMPTY_RIGHT_EDGE_SPACE = $"|{Display.WriteUnderline(" ")}|";
+        private static string EMPTY_SPACE_RIGHT_EDGE = $"|{Display.WriteUnderline(" ")}|";
         private static string BOAT_SPACE = $"|{Display.WriteUnderline("O")}";
         private static string BOAT_SPACE_RIGHT_EDGE = $"|{Display.WriteUnderline("O")}|";
+        private static string HIT_BOAT_SPACE = $"|{Display.WriteUnderline("X")}";
+        private static string HIT_BOAT_SPACE_RIGHT_EDGE = $"|{Display.WriteUnderline("X")}|";
+        private static string MISS_SPACE = $"|{Display.WriteUnderline("~")}";
+        private static string MISS_SPACE_RIGHT_EDGE = $"|{Display.WriteUnderline("~")}|";
 
         public Boat[] Boats { get; set; }
         public string[,] GameBoard { get; set; }
@@ -64,6 +68,28 @@ namespace battleship
             }
         }
 
+        public void DisplayToOpponent()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            string currentRow;
+            int OFFSET = 4;
+            for (int row = 0; row < BOARD_DIMENSION; row++)
+            {
+                for (int column = 0; column < BOARD_DIMENSION; column++)
+                {
+                    if (GameBoard[row, column] == BOAT_SPACE)
+                        stringBuilder.Append(EMPTY_SPACE);
+                    else if (GameBoard[row, column] == BOAT_SPACE_RIGHT_EDGE)
+                        stringBuilder.Append(EMPTY_SPACE_RIGHT_EDGE);
+                    else
+                        stringBuilder.Append(GameBoard[row, column]);
+                }
+                currentRow = stringBuilder.ToString();
+                Display.CenterText(currentRow, currentRow.Length / OFFSET);
+                stringBuilder.Clear();
+            }
+        }
+
         private void SetRowHeaders()
         {
             for (int row = 0; row < BOARD_DIMENSION - 1; row++)
@@ -86,7 +112,7 @@ namespace battleship
             {
                 for (int column = 1; column < BOARD_DIMENSION; column++)
                 {
-                    if (column == BOARD_DIMENSION - 1) GameBoard[row, column] = EMPTY_RIGHT_EDGE_SPACE;
+                    if (column == BOARD_DIMENSION - 1) GameBoard[row, column] = EMPTY_SPACE_RIGHT_EDGE;
                     else GameBoard[row, column] = EMPTY_SPACE;
                 }
             }
@@ -205,7 +231,7 @@ namespace battleship
             for (int i = 0; i < boat.BoatLives.Length; i++)
             {
                 if (GameBoard[boardRow - rowOffset, boardColumn + i - boardOffset] == EMPTY_SPACE ||
-                    GameBoard[boardRow - rowOffset, boardColumn + i - boardOffset] == EMPTY_RIGHT_EDGE_SPACE)
+                    GameBoard[boardRow - rowOffset, boardColumn + i - boardOffset] == EMPTY_SPACE_RIGHT_EDGE)
                     Display.WriteAt(Display.WriteUnderline(" "), row - rowOffset, column - columnOffset + (i * 2));
                 if (GameBoard[boardRow - rowOffset, boardColumn + i - boardOffset] == BOAT_SPACE ||
                     GameBoard[boardRow - rowOffset, boardColumn + i - boardOffset] == BOAT_SPACE_RIGHT_EDGE)
@@ -237,9 +263,8 @@ namespace battleship
             else boardRowOffset = 0;
             for (int i = 0; i < boat.BoatLives.Length; i++)
             {
-                Display.WriteAt($"boardCol: {boardColumn - boardColumnOffset} - GameBoard: {GameBoard[boardRow + i, boardColumn - boardColumnOffset]}", 15 + i, 0);
                 if (GameBoard[boardRow + i - boardRowOffset, boardColumn - boardColumnOffset] == EMPTY_SPACE ||
-                    GameBoard[boardRow + i - boardRowOffset, boardColumn - boardColumnOffset] == EMPTY_RIGHT_EDGE_SPACE)
+                    GameBoard[boardRow + i - boardRowOffset, boardColumn - boardColumnOffset] == EMPTY_SPACE_RIGHT_EDGE)
                     Display.WriteAt(Display.WriteUnderline(" "), row - rowOffset + i, column - columnOffset);
 
                 if (GameBoard[boardRow + i - boardRowOffset, boardColumn - boardColumnOffset] == BOAT_SPACE ||
@@ -259,6 +284,43 @@ namespace battleship
                 translator++;
             }
             return column - translator;
+        }
+
+        public bool AreValidAttackCoordinates(Coordinate coordinates)
+        {
+            string valueAtCoordinates = GameBoard[coordinates.Row, coordinates.Column];
+            if (valueAtCoordinates == EMPTY_SPACE ||
+                valueAtCoordinates == EMPTY_SPACE_RIGHT_EDGE||
+                valueAtCoordinates == BOAT_SPACE ||
+                valueAtCoordinates == BOAT_SPACE_RIGHT_EDGE)
+                return true;
+            else
+                return false;
+        }
+
+        public void AddAttack(Coordinate coordinates)
+        {
+            string valueAtCoordinates = GameBoard[coordinates.Row, coordinates.Column];
+            if (valueAtCoordinates == EMPTY_SPACE)
+            {
+                GameBoard[coordinates.Row, coordinates.Column] = MISS_SPACE;
+                Display.DisplayMiss();
+            }
+            else if (valueAtCoordinates == EMPTY_SPACE_RIGHT_EDGE)
+            {
+                GameBoard[coordinates.Row, coordinates.Column] = MISS_SPACE_RIGHT_EDGE;
+                Display.DisplayMiss();
+            }
+            else if (valueAtCoordinates == BOAT_SPACE)
+            {
+                GameBoard[coordinates.Row, coordinates.Column] = HIT_BOAT_SPACE;
+                Display.DisplayHit();
+            }
+            else if (valueAtCoordinates == BOAT_SPACE_RIGHT_EDGE)
+            {
+                GameBoard[coordinates.Row, coordinates.Column] = HIT_BOAT_SPACE_RIGHT_EDGE;
+                Display.DisplayHit();
+            }
         }
     }
 }

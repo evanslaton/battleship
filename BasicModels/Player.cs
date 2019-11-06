@@ -8,13 +8,15 @@ namespace battleship
 
     public class Player
     {
+        public string Name { get; set; }
         public Board Board { get; set; }
         public Player Opponent { get; set; }
         IPlaceBoatBehavior BoatPlacer { get; set; }
         ITakeTurnBehavior TurnTaker {get; set;}
 
-        public Player(IPlaceBoatBehavior boatPlacer, ITakeTurnBehavior turnTaker)
+        public Player(string name, IPlaceBoatBehavior boatPlacer, ITakeTurnBehavior turnTaker)
         {
+            Name = name;
             Board = new Board();
             Opponent = null;
             BoatPlacer = boatPlacer;

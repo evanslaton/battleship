@@ -14,7 +14,7 @@ namespace battleship
         private SimplePlayerFactory SimplePlayerFactory { get; set; }
         public Player ActivePlayer { get; set; }
         public Player InactivePlayer { get; set; }
-        private NumberOfHumanPlayers NumberOfHumanPlayers { get; set; }
+        public NumberOfHumanPlayers NumberOfHumanPlayers { get; private set; }
 
         public Game()
         {
@@ -34,7 +34,8 @@ namespace battleship
             game.ActivePlayer.PerformPlaceBoat();
             game.ChangeActivePlayer();
 
-            Display.DisplayBoatPlacing(game);
+            if (game.NumberOfHumanPlayers == NumberOfHumanPlayers.TwoPlayers)
+                Display.DisplayBoatPlacing(game);
             game.ActivePlayer.PerformPlaceBoat();
             game.ChangeActivePlayer();
 
@@ -42,49 +43,13 @@ namespace battleship
             while (!activePlayerHasWon)
             {
                 Display.DisplayOpponentBoard(game);
-                game.Attack();
+                game.ActivePlayer.PerformTakeTurn();
                 activePlayerHasWon = game.CheckForWin();
                 if (!activePlayerHasWon) game.ChangeActivePlayer();
             }
 
             Display.DisplayWinner(game);
             Console.ReadKey();
-        }
-
-        private void Attack()
-        {
-            Board OpponentBoard = ActivePlayer.Opponent.Board;
-            Coordinate coordinate;
-            bool isValidAttack;
-            do
-            {
-                coordinate = GetAttackCoordinates();
-                isValidAttack = OpponentBoard.AreValidAttackCoordinates(coordinate);
-
-            } while (!isValidAttack);
-            OpponentBoard.AddAttack(coordinate);
-        }
-
-        private Coordinate GetAttackCoordinates()
-        {
-            string userInput;
-            Match validInput;
-            string REGEX = @"^((([1-9]|10)[a-j])|(([a-j]([1-9]|10))))$";
-            bool isValidInput = false;
-            int COORDINATES_LINE = 11;
-            int COORDINATES_LINE_LENGTH = 18;
-            do
-            {
-                Console.SetCursorPosition(0, COORDINATES_LINE);
-                Console.Write(new string(' ', Console.WindowWidth));
-                Console.SetCursorPosition(0, COORDINATES_LINE);
-                Display.CenterTextWithoutReturn("Coordinates: ", COORDINATES_LINE_LENGTH);
-                userInput = Console.ReadLine();
-                userInput = userInput.ToLower();
-                validInput = Regex.Match(userInput, REGEX);
-                isValidInput = validInput.Success;
-            } while (!isValidInput);
-            return new Coordinate(userInput);
         }
 
         private void SelectNumberOfPlayers()

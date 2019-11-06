@@ -6,7 +6,7 @@ namespace battleship.TakeTurnBehaviors
 {
     class ComputerTurnTaker : ITakeTurnBehavior
     {
-        public void TakeTurn()
+        public void TakeTurn(Player opponent)
         {
             Console.WriteLine("Computer turn");
         }

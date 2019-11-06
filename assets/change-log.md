@@ -38,3 +38,5 @@
 
 **11-06-2019**
 * Added end.txt, functionality to check for win and display final screen
+* Exported human turn taking functionality to HumanTurnTaker.cs
+* Computer can place boats

@@ -30,7 +30,7 @@ namespace battleship
 
         public void PerformTakeTurn()
         {
-            TurnTaker.TakeTurn();
+            TurnTaker.TakeTurn(Opponent);
         }
     }
 }

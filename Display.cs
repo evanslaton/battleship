@@ -159,6 +159,9 @@ namespace battleship
             ReadAndDisplayFile(LOGO_PATH);
             DisplayPrompt($"{game.ActivePlayer.Name}, {ATTACK_PROMPT}\n\n\n");
             game.ActivePlayer.Opponent.Board.DisplayToOpponent();
+
+            Console.WriteLine();
+            game.ActivePlayer.Opponent.Board.DisplayToOwner();
         }
 
         public static void DisplayBetweenTurns(Game game)

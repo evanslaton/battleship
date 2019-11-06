@@ -27,3 +27,8 @@
 
 **11-04-2019**
 * Able to move boats around the grid including changing the boats orientation
+* Able to add horizontally orientated boats to the game board
+
+**11-05-2019**
+* Fixed bug where boats weren't rendering properly when moving over other boats
+* Able to add vertically oriented boats to the game board

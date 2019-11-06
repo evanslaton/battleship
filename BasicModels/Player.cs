@@ -28,7 +28,7 @@ namespace battleship
             BoatPlacer.PlaceBoat(Board);
         }
 
-        public void PerformTakeTurn()
+        public void PerformTakeTurn(Game game)
         {
             TurnTaker.TakeTurn(Opponent);
         }

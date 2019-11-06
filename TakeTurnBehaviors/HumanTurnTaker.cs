@@ -9,6 +9,7 @@ namespace battleship.TakeTurnBehaviors
     {
         public void TakeTurn(Player opponent)
         {
+            Display.DisplayOpponentBoard(opponent.Opponent);
             Board OpponentBoard = opponent.Board;
             Coordinate coordinate;
             bool isValidAttack;

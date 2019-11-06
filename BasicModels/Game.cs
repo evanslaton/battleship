@@ -41,9 +41,8 @@ namespace battleship
 
             bool activePlayerHasWon = false;
             while (!activePlayerHasWon)
-            {
-                Display.DisplayOpponentBoard(game);
-                game.ActivePlayer.PerformTakeTurn();
+            {                
+                game.ActivePlayer.PerformTakeTurn(game);
                 activePlayerHasWon = game.CheckForWin();
                 if (!activePlayerHasWon) game.ChangeActivePlayer();
             }

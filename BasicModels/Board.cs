@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 
 namespace battleship
 {
@@ -396,6 +397,54 @@ namespace battleship
                 Lives--;
                 Display.DisplayHit();
             }
+        }
+
+        public bool AreValidComputerAttackCoordinates(int row, int column)
+        {
+            if (GameBoard[row, column] == EMPTY_SPACE ||
+                GameBoard[row, column] == EMPTY_SPACE_RIGHT_EDGE ||
+                GameBoard[row, column] == BOAT_SPACE ||
+                GameBoard[row, column] == BOAT_SPACE_RIGHT_EDGE)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void AddComputerAttack(int row, int column)
+        {
+            string value = GameBoard[row, column];
+            string newValue = GetValueToChangeTo(row, column);
+
+            if (newValue == BOAT_SPACE || newValue == BOAT_SPACE_RIGHT_EDGE)
+                Lives--;
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (GameBoard[row, column] == value)
+                    GameBoard[row, column] = newValue;
+                else
+                    GameBoard[row, column] = value;
+                Console.SetCursorPosition(0, ROW_OFFSET - 1);
+                DisplayToOwner();
+                Thread.Sleep(500);
+            }
+
+        }
+
+        private string GetValueToChangeTo(int row, int column)
+        {
+            if (GameBoard[row, column] == EMPTY_SPACE)
+                return MISS_SPACE;
+            else if (GameBoard[row, column] == EMPTY_SPACE_RIGHT_EDGE)
+                return MISS_SPACE_RIGHT_EDGE;
+            else if (GameBoard[row, column] == BOAT_SPACE)
+                return HIT_BOAT_SPACE;
+            else
+                return BOAT_SPACE_RIGHT_EDGE;
         }
     }
 }

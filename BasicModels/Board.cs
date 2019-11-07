@@ -10,8 +10,8 @@ namespace battleship
     {
         //For underlining characters in the console
         const int STD_OUTPUT_HANDLE = -11;
-        const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 4;
 
+        const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 4;
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern IntPtr GetStdHandle(int nStdHandle);
 

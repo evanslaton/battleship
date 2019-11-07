@@ -1,7 +1,7 @@
 |[README](README.md)|[How to Play](assets/how-to-play.md)|[Project Architecture](assets/architecture.md)|[User Stories](assets/user-stories.md)|[Change Log](assets/change-log.md)|
 |-|-|-|-|-|
 
-# Battleship Console Game
+<h1 align="center">Battleship Console Game</h1>
 Based on Battleship by Milton Bradley
 
 **Version:** 1.0.0
@@ -9,7 +9,14 @@ Based on Battleship by Milton Bradley
   <img src="assets/images/battleship.jpg" />
 </p>
 
+## Purpose
+This project was built to reinforce the concepts learned over the first five weeks of C# training received through the Microsoft Apprenti program.
+
 ## How to Run
+* Clone this repo
+* Open battleship.sln with Visual Studio
+* Press play
+* Have fun!
 
 ## Resources
 

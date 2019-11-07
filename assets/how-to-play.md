@@ -26,12 +26,11 @@ If you are playing against the computer you will place all of your ships and the
 ![Boat placing screen](images/place-boat-horizontal.PNG)
 
 ## Attacking
-Once you have moved on to the attack phase each player will take turns entering attack coordinates. Coordinates must consist of a letter a-j and a number 1-10. Press enter to submit the coordinate and you will be presented with either the HIT or MISS screen to let you know... if you hit or missed the opponent's ship.
+Once you have moved on to the attack phase each player will take turns entering attack coordinates. Coordinates must consist of a letter a-j and a number 1-10. Press enter to submit the coordinate and you will be presented with either the HIT or MISS screen to let you know... if you hit or missed the opponent's ship. A miss is signified  on the board by the ~ character and a hit is signified by an X.
 
-A miss is signified by the ~ character and a hit is signified by an X.
-
-![Hit screen](images/hit.PNG)
-![Miss screen](images/miss.PNG)
+           HIT Screen            |            MISS Screen
+:-------------------------------:|:---------------------------------:
+  ![Hit screen](images/hit.PNG)  |  ![Miss screen](images/miss.PNG)
 
 If you are playing against the computer, during the computer's turn you will see your own board. When the computer attacks the coordinate will flash on the screen.
 

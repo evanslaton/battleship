@@ -3,10 +3,10 @@
 
 # How to Play
 
-For a quick video tutorial on playing the Milton Bradley Battleship game click [here](https://www.youtube.com/watch?v=q0qpQ8doUp8)
+For a quick video tutorial on playing the Milton Bradley Battleship game click [here](https://www.youtube.com/watch?v=q0qpQ8doUp8).
 
 ## Goal
-The goal of the game is to destroy all of your opponents ships before your are sunk.
+The goal of the game is to destroy all of your opponent's ships before yours are sunk.
 
 ## Secrets
 Throughout the game you will be presented with the a 'secret screen' whose sole purpose is to prevent your opponent from seeing where your ships are placed and vice-versa. When you encounter this screen press any key to continue playing the game.
@@ -16,10 +16,10 @@ Throughout the game you will be presented with the a 'secret screen' whose sole 
 ## Getting Started
 After running the app you will be presented with the welcome screen. Use the left and right arrow keys to select either 'One Player' or 'Two Players' and press enter to submit your selection. If you choose 'One Player' you will play against a computer player.
 
-![Welcome screen](images/welcome.PNG)
+![Welcome screen](images/welcome-screen.PNG)
 
 ## Placing Boats
-You have five ships of varying length to place around the board. Each ship is represented by a series of O's. Use the arrow keys to navigate around the board and you can press the spacebar to toggle between horizontal and vertical orientations. Press enter to place the boat when you are satisfied with its location. The game will not let you place ships that are overlapping nor move a ship outside of the board.
+You have five ships of varying length to place around the board. Each ship is represented by a series of O's. Use the arrow keys to navigate around the board pressing the spacebar to toggle between horizontal and vertical orientations. Press enter to place the boat when you are satisfied with its location. The game will not let you place ships that are overlapping nor move a ship outside of the board.
 
 If you are playing against the computer you will place all of your ships and then move immediately into the attacking phase. If you are playing against another person then player one will place all of their ships, then player two will place all of theirs. Make sure your opponent doesn't see where you put your ships!
 

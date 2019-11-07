@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 
 namespace battleship
 {
@@ -20,7 +21,7 @@ namespace battleship
         [DllImport("kernel32.dll")]
         static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
 
-        private static readonly int BOARD_DIMENSION = 11;
+        public static readonly int BOARD_DIMENSION = 11;
         private static readonly string[] ROW_HEADERS = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
         private static readonly string[] COLUMN_HEADERS = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
         public static int ROW_OFFSET = 12;
@@ -36,11 +37,13 @@ namespace battleship
 
         public Boat[] Boats { get; set; }
         public string[,] GameBoard { get; set; }
+        public int Lives { get; set; }
 
         public Board()
         {
             GameBoard = new string[BOARD_DIMENSION, BOARD_DIMENSION];
             FillBoard();
+            Lives = 17;
         }
 
         private void FillBoard()
@@ -118,14 +121,84 @@ namespace battleship
             }
         }
 
+        public bool AddComputerBoatToBoard(Boat boat, int row, int column)
+        {
+            if (boat.Orientation == Orientation.Horizontal && 
+                ValidComputerHorizontalBoatLocation(boat, row, column))
+            {
+                AddComputerHorizontalBoat(boat, row, column);
+                return true;
+            }
+            else if (boat.Orientation == Orientation.Vertical && 
+                ValidComputerVerticalBoatLocation(boat, row, column))
+            {
+                AddComputerVerticalBoat(boat, row, column);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidComputerHorizontalBoatLocation(Boat boat, int row, int column)
+        {
+            for (int i = 0; i < boat.BoatLives.Length; i++)
+            {
+                if (GameBoard[row, column + i] == BOAT_SPACE ||
+                    GameBoard[row, column + i] == BOAT_SPACE_RIGHT_EDGE)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void AddComputerHorizontalBoat(Boat boat, int row, int column)
+        {
+            for (int i = 0; i < boat.BoatLives.Length; i++)
+            {
+                if (GameBoard[row, column + i] == EMPTY_SPACE)
+                    GameBoard[row, column + i] = BOAT_SPACE;
+                else
+                    GameBoard[row, column + i] = BOAT_SPACE_RIGHT_EDGE;
+            }
+        }
+
+        private bool ValidComputerVerticalBoatLocation(Boat boat, int row, int column)
+        {
+            for (int i = 0; i < boat.BoatLives.Length; i++)
+            {
+                if (GameBoard[row + i, column] == BOAT_SPACE ||
+                    GameBoard[row + i, column] == BOAT_SPACE_RIGHT_EDGE)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void AddComputerVerticalBoat(Boat boat, int row, int column)
+        {
+            for (int i = 0; i < boat.BoatLives.Length; i++)
+            {
+                if (GameBoard[row + i, column] == EMPTY_SPACE)
+                    GameBoard[row + i, column] = BOAT_SPACE;
+                else
+                    GameBoard[row + i, column] = BOAT_SPACE_RIGHT_EDGE;
+            }
+        }
+
         public bool AddBoatToBoard(Boat boat, int row, int column)
         {
-            if (boat.Orientation == Orientation.Horizontal && ValidHorizontalBoatLocation(boat, row, column))
+            if (boat.Orientation == Orientation.Horizontal && 
+                ValidHorizontalBoatLocation(boat, row, column))
             {
                 AddHorizontalBoat(boat, row, 0, column, 0);
                 return true;
             }
-            else if (boat.Orientation == Orientation.Vertical && ValidVerticalBoatLocation(boat, row, column))
+            else if (boat.Orientation == Orientation.Vertical && 
+                ValidVerticalBoatLocation(boat, row, column))
             {
                 AddVerticalBoat(boat, row, 0, column, 0);
                 return true;
@@ -151,6 +224,19 @@ namespace battleship
             return true;
         }
 
+        public void AddHorizontalBoat(Boat boat, int row, int rowOffset, int column, int columnOffset)
+        { 
+            int boardRow = row - ROW_OFFSET + 1;
+            int boardColumn = TranslateConsoleGridToGameBoard(column);
+            for (int i = 0; i < boat.BoatLives.Length; i++)
+            { 
+                if (GameBoard[boardRow, boardColumn + i] == EMPTY_SPACE)
+                    GameBoard[boardRow, boardColumn + i] = BOAT_SPACE;
+                else
+                    GameBoard[boardRow, boardColumn + i] = BOAT_SPACE_RIGHT_EDGE;
+            }
+        }
+
         private bool ValidVerticalBoatLocation(Boat boat, int row, int column)
         {
             int boardRow = row - ROW_OFFSET + 1;
@@ -166,18 +252,6 @@ namespace battleship
             return true;
         }
 
-        public void AddHorizontalBoat(Boat boat, int row, int rowOffset, int column, int columnOffset)
-        { 
-            int boardRow = row - ROW_OFFSET + 1;
-            int boardColumn = TranslateConsoleGridToGameBoard(column);
-            for (int i = 0; i < boat.BoatLives.Length; i++)
-            { 
-                if (GameBoard[boardRow, boardColumn + i] == EMPTY_SPACE)
-                    GameBoard[boardRow, boardColumn + i] = BOAT_SPACE;
-                else
-                    GameBoard[boardRow, boardColumn + i] = BOAT_SPACE_RIGHT_EDGE;
-            }
-        }
 
         public void AddVerticalBoat(Boat boat, int row, int rowOffset, int column, int columnOffset)
         {
@@ -314,13 +388,63 @@ namespace battleship
             else if (valueAtCoordinates == BOAT_SPACE)
             {
                 GameBoard[coordinates.Row, coordinates.Column] = HIT_BOAT_SPACE;
+                Lives--;
                 Display.DisplayHit();
             }
             else if (valueAtCoordinates == BOAT_SPACE_RIGHT_EDGE)
             {
                 GameBoard[coordinates.Row, coordinates.Column] = HIT_BOAT_SPACE_RIGHT_EDGE;
+                Lives--;
                 Display.DisplayHit();
             }
+        }
+
+        public bool AreValidComputerAttackCoordinates(int row, int column)
+        {
+            if (GameBoard[row, column] == EMPTY_SPACE ||
+                GameBoard[row, column] == EMPTY_SPACE_RIGHT_EDGE ||
+                GameBoard[row, column] == BOAT_SPACE ||
+                GameBoard[row, column] == BOAT_SPACE_RIGHT_EDGE)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void AddComputerAttack(int row, int column)
+        {
+            string value = GameBoard[row, column];
+            string newValue = GetValueToChangeTo(row, column);
+
+            if (newValue == BOAT_SPACE || newValue == BOAT_SPACE_RIGHT_EDGE)
+                Lives--;
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (GameBoard[row, column] == value)
+                    GameBoard[row, column] = newValue;
+                else
+                    GameBoard[row, column] = value;
+                Console.SetCursorPosition(0, ROW_OFFSET - 1);
+                DisplayToOwner();
+                Thread.Sleep(500);
+            }
+
+        }
+
+        private string GetValueToChangeTo(int row, int column)
+        {
+            if (GameBoard[row, column] == EMPTY_SPACE)
+                return MISS_SPACE;
+            else if (GameBoard[row, column] == EMPTY_SPACE_RIGHT_EDGE)
+                return MISS_SPACE_RIGHT_EDGE;
+            else if (GameBoard[row, column] == BOAT_SPACE)
+                return HIT_BOAT_SPACE;
+            else
+                return BOAT_SPACE_RIGHT_EDGE;
         }
     }
 }

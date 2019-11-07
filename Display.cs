@@ -21,11 +21,13 @@ namespace battleship
         private static string BATTLESHIP_PATH = @"..\..\..\assets\images\battleship.txt";
         private static string EXPLOSION_PATH = @"..\..\..\assets\images\explosion.txt";
         private static string MISS_PATH = @"..\..\..\assets\images\miss.txt";
+        private static string END_PATH = @"..\..\..\assets\images\end.txt";
         private static string[] PLAYER_SELECTION = { "  One Player  ", "  Two Players  " };
         private static int PLAYER_SELECTION_LINE_NUMBER = 11;
         private static string NUMBER_OF_PLAYERS_PROMPT = "How many players? Use the left and right arrow keys to choose and press enter to submit.";
         private static string PLACE_BOAT_PROMPT = "Use the arrow keys to move the boat, spacebar to change orientation, and enter to place.";
-        private static string ATTACK_PROMPT = "Enter a coordinate and press enter to fire. Exampes: A6, J7, D1.";
+        private static string ATTACK_PROMPT = "enter a coordinate and press enter to fire. Exampes: A6, J7, D1.";
+        private static string COMPUTER_ATTACK_PROMPT = "Computer player's turn.";
         private static string PRESS_KEY_TO_CONTINUE_PROMPT = "press any key to continue.";
 
         public static void DisplayWelcome()
@@ -119,7 +121,7 @@ namespace battleship
 
         public static void DisplayBoatPlacing(Game game)
         {
-            Display.DisplayBetweenTurns(game);
+            Display.DisplayBetweenTurns(game.ActivePlayer);
             ReadAndDisplayFile(LOGO_PATH);
             DisplayPrompt(PLACE_BOAT_PROMPT);
             game.ActivePlayer.Board.DisplayToOwner();
@@ -143,7 +145,7 @@ namespace battleship
                 Console.Write(s);
 
                 // moves cursor outside of GameBoard
-                Console.SetCursorPosition(0, 15);
+                Console.SetCursorPosition(0, 0);
             }
             catch (ArgumentOutOfRangeException e)
             {
@@ -152,20 +154,28 @@ namespace battleship
             }
         }
 
-        public static void DisplayOpponentBoard(Game game)
+        public static void DisplayHumanPlayerBoard(Player humanPlayer)
         {
-            Display.DisplayBetweenTurns(game);
+            Console.Clear();
             ReadAndDisplayFile(LOGO_PATH);
-            DisplayPrompt(ATTACK_PROMPT + "\n\n\n");
-            game.ActivePlayer.Opponent.Board.DisplayToOpponent();
+            DisplayPrompt($"{COMPUTER_ATTACK_PROMPT}");
+            humanPlayer.Board.DisplayToOwner();
         }
 
-        public static void DisplayBetweenTurns(Game game)
+        public static void DisplayOpponentBoard(Player activePlayer)
+        {
+            Display.DisplayBetweenTurns(activePlayer);
+            ReadAndDisplayFile(LOGO_PATH);
+            DisplayPrompt($"{activePlayer.Name}, {ATTACK_PROMPT}\n\n\n");
+            activePlayer.Opponent.Board.DisplayToOpponent();
+        }
+
+        public static void DisplayBetweenTurns(Player activePlayer)
         {
             Console.Clear();
             ReadAndDisplayFile(LOGO_PATH);
             Console.WriteLine("\n\n\n");
-            DisplayPrompt($"{game.ActivePlayer.Name}, {PRESS_KEY_TO_CONTINUE_PROMPT}");
+            DisplayPrompt($"{activePlayer.Name}, {PRESS_KEY_TO_CONTINUE_PROMPT}");
             Console.ReadKey(true);
             Console.WriteLine();
             Console.Clear();
@@ -175,14 +185,23 @@ namespace battleship
         {
             Console.Clear();
             ReadAndDisplayFile(EXPLOSION_PATH);
-            Thread.Sleep(1000);
+            Thread.Sleep(600);
         }
 
         public static void DisplayMiss()
         {
             Console.Clear();
             ReadAndDisplayFile(MISS_PATH);
-            Thread.Sleep(1000);
+            Thread.Sleep(600);
+        }
+
+        public static void DisplayWinner(Game game)
+        {
+            Console.Clear();
+            ReadAndDisplayFile(LOGO_PATH);
+            Console.WriteLine();
+            DisplayPrompt($"Congratulations {game.ActivePlayer.Name}, you have won!");
+            ReadAndDisplayFile(END_PATH);
         }
     }
 }

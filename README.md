@@ -6,7 +6,6 @@ Based on Battleship by Milton Bradley
 
 **Version:** 1.0.0
 
-
 ![Battleship Game Image](assets/images/battleship.jpg)
 
 ## How to Run
@@ -17,6 +16,7 @@ Based on Battleship by Milton Bradley
 * [ASCII generator](http://www.network-science.de/ascii/)
 * [ASCII battleship art](http://asciiartboats.blogspot.com/2016/06/battleship-ascii-art.html)
 * [ASCII explosion art](https://www.asciiart.eu/weapons/explosives)
+* [ASCII medal art](https://www.asciiart.eu/miscellaneous/awards)
 * [Changing colors in the console](https://stackoverflow.com/questions/7524057/how-do-i-change-the-full-background-color-of-the-console-window-in-c)
 * [Underlining strings in the console](https://stackoverflow.com/questions/5237666/adding-text-decorations-to-console-output)
 * [Centering text in the console](https://stackoverflow.com/questions/12847960/centering-text-in-c-sharp-console-app-only-working-with-some-input)

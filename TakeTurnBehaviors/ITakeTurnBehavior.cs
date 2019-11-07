@@ -6,6 +6,6 @@ namespace battleship
 {
     public interface ITakeTurnBehavior
     {
-        public void TakeTurn();
+        public void TakeTurn(Player opponent);
     }
 }

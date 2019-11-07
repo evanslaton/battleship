@@ -5,8 +5,9 @@
 Based on Battleship by Milton Bradley
 
 **Version:** 1.0.0
-
-<img align="center" src="assets/images/battleship.jpg" />
+<p align="center">
+  <img src="assets/images/battleship.jpg" />
+</p>
 
 ## How to Run
 

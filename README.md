@@ -5,7 +5,8 @@
 Based on Battleship by Milton Bradley
 
 **Version:** 1.0.0
-![Battleship Logo](assets/images/battleship.jpg)
+
+![Battleship Game Image](assets/images/battleship.jpg)
 
 ## Purpose
 This project was built to reinforce the concepts learned over the first five weeks of C# training received through the Microsoft Apprenti program.

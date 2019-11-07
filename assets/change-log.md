@@ -41,3 +41,6 @@
 * Exported human turn taking functionality to HumanTurnTaker.cs
 * Computer player functionality complete
 * Updated documentation
+
+**11-07-2019**
+* Updated documentation

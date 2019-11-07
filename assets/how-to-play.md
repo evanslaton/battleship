@@ -27,9 +27,9 @@ You have five ships of varying length to place around the board. Each ship is re
 
 If you are playing against the computer you will place all of your ships and then move immediately into the attacking phase. If you are playing against another person then player one will place all of their ships, then player two will place all of theirs. Make sure your opponent doesn't see where you put your ships!
 
-|                   BOAT PLACING Screen                  |
-|--------------------------------------------------------|
-|![Boat placing screen](images/place-boat-horizontal.PNG)|
+|         HORIZONTAL BOAT PLACING Screen                 |        VERTICAL BOAT PLACING Screen
+|--------------------------------------------------------|------------------------------------------------------|
+|![Boat placing screen](images/place-boat-horizontal.PNG)|![Boat placing screen](images/place-boat-vertical.PNG)|
 
 ## Attacking
 Once you have moved on to the attack phase each player will take turns entering attack coordinates. Coordinates must consist of a letter a-j and a number 1-10. Press enter to submit the coordinate and you will be presented with either the HIT or MISS screen to let you know... if you hit or missed the opponent's ship. A miss is signified  on the board by the ~ character and a hit is signified by an X.

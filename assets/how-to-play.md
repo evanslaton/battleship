@@ -38,7 +38,7 @@ If you are playing against the computer, during the computer's turn you will see
 ![Attack screen](images/computer-attacking.PNG)
 
 ## End Game
-When one player has hit all 17 of their opponents ship occupied spaces the game will end. The winner will be congratulated while the loser must live with the shame of defeat in perpetuity.
+When one player has hit all 17 of their opponent's ship occupied spaces the game will end. The winner will be congratulated while the loser must live with the shame of defeat in perpetuity.
 
 ![Win screen](images/win.PNG)
 

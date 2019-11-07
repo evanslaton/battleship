@@ -9,16 +9,16 @@ Based on Battleship by Milton Bradley
   <img src="assets/images/battleship.jpg" />
 </p>
 
-## Purpose
+<h2 align="center">Purpose</h2>
 This project was built to reinforce the concepts learned over the first five weeks of C# training received through the Microsoft Apprenti program.
 
-## How to Run
+<h2 align="center">How to Run</h2>
 * Clone this repo
 * Open battleship.sln with Visual Studio
 * Press play
 * Have fun!
 
-## Resources
+<h2 align="center">Resources</h2>
 
 ### Display
 * [ASCII generator](http://www.network-science.de/ascii/)

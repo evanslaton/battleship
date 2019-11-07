@@ -22,8 +22,6 @@ namespace battleship.TakeTurnBehaviors
             Thread.Sleep(2000);
 
             opponent.Board.AddComputerAttack(row, column);
-
-            Console.ReadKey();
         }
     }
 }

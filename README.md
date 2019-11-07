@@ -6,7 +6,6 @@ Based on Battleship by Milton Bradley
 
 **Version:** 1.0.0
 
-
 ![Battleship Game Image](assets/images/battleship.jpg)
 
 ## How to Run
